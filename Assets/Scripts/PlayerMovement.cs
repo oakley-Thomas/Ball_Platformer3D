@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float forwardSpeed;
     [SerializeField] float rightSpeed;
+    [SerializeField] float jumpForce;
 
     float horizontalInput = 0;
     float verticalInput = 0;
@@ -22,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
     }
 
     // FixedUpdate is called multiple times per frame
@@ -34,5 +39,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 direction = new Vector3(verticalInput * forwardSpeed, 0, horizontalInput * rightSpeed * -1);
         rb.AddTorque(direction, ForceMode.Acceleration);
+    }
+
+    void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 }
